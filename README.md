@@ -1,1 +1,1 @@
-Tämä tietokantasovellus mahdollistaa darts -pelien tulosten tallentamisen ja niiden vertailun.
+This app provides a user-friendly way to keep track of users' darts match stats and averages.

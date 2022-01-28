@@ -5,6 +5,7 @@ Add an average: <input type="number" step="0.1" min=0 max=180 name="addaverage">
 <br>
 <input type="submit" value="Submit">
 </form>
+<h1>Your total average: {{ total }}</h1>
 <h2>Your averages:</h2>
 {% for avg in avgs %}
 <p>{{ avg.average_date }} {{ avg.average }}</p>

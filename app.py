@@ -61,7 +61,9 @@ def mainpage():
 			user = db.session.execute("SELECT id FROM users WHERE username=:username", {"username": username})
 			user_id = user.fetchone()[0]
 			averages = db.session.execute("SELECT average_date, average FROM averages WHERE user_id=:user_id", {"user_id": user_id})
-			return render_template("mainpage.html", avgs=averages)
+			total_avg = db.session.execute("SELECT AVG(average)::numeric(3,1) FROM averages WHERE user_id=:user_id", {"user_id": user_id})
+			total = total_avg.fetchone()[0]
+			return render_template("mainpage.html", avgs=averages, total=total)
 		else:
 			return render_template("mainpage.html")
 	if request.method == "POST":
@@ -73,3 +75,7 @@ def mainpage():
 		db.session.execute(sql, {"user_id": user_id, "average": average})
 		db.session.commit()
 		return redirect("/")
+
+@app.route("/game", methods = ["GET"])
+def game():
+	return render_template("game.html")

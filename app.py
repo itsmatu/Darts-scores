@@ -65,7 +65,8 @@ def mainpage():
 			total = total_avg.fetchone()[0]
 			return render_template("mainpage.html", avgs=averages, total=total)
 		else:
-			return render_template("mainpage.html")
+			averages = db.session.execute("SELECT average_date, average FROM averages")
+			return render_template("mainpage.html", avgs=averages)
 	if request.method == "POST":
 		average = request.form["addaverage"]
 		username = session["username"]

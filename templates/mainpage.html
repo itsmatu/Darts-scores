@@ -1,5 +1,5 @@
 {% if session.username %}
-<p>You are logged in as <b>{{ session.username }}</b> <a href="/logout">Log out</a></p>
+<p>You are logged in as <b>{{ session.username }}</b><a href="/logout">Log out</a></p>
 <form action="/mainpage" method="POST">
 Add an average: <input type="number" step="0.1" min=0 max=180 name="addaverage">
 <br>

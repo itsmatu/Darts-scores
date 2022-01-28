@@ -82,3 +82,15 @@ def mainpage():
 @app.route("/game", methods = ["GET"])
 def game():
 	return render_template("game.html")
+
+@app.route("/newgame", methods = ["GET", "POST"])
+def newgame():
+	if request.method == "GET":
+		return render_template("newgame.html")
+
+	if request.method == "POST":
+		if session.get("username"):
+			username = session["username"]
+			user = db.session.execute("SELECT id FROM users WHERE username=:username", {"username": username})
+			score = request.form["score"]
+			return render_template("newgame.html", score=score)

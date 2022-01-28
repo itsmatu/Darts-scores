@@ -60,28 +60,38 @@ def mainpage():
 			username = session["username"]
 			user = db.session.execute("SELECT id FROM users WHERE username=:username", {"username": username})
 			user_id = user.fetchone()[0]
-			averages = db.session.execute("SELECT average_date, average FROM averages WHERE user_id=:user_id ORDER BY id DESC", {"user_id": user_id})
-			topavgs = db.session.execute("SELECT average_date, average FROM averages WHERE user_id=:user_id ORDER BY average DESC LIMIT 5", {"user_id": user_id})
+			averages = db.session.execute("SELECT game_id, average_date, average FROM averages WHERE user_id=:user_id ORDER BY id DESC", {"user_id": user_id})
+			topavgs = db.session.execute("SELECT game_id, average_date, average FROM averages WHERE user_id=:user_id ORDER BY average DESC LIMIT 5", {"user_id": user_id})
 			total_avg = db.session.execute("SELECT AVG(average)::numeric(3,1) FROM averages WHERE user_id=:user_id AND average_date > NOW() - INTERVAL '30 days'", {"user_id": user_id})
 			total = total_avg.fetchone()[0]
 			return render_template("mainpage.html", avgs=averages, total=total, topavgs=topavgs)
 		else:
-			averages = db.session.execute("SELECT average_date, average FROM averages")
-			top_averages = db.session.execute("SELECT average_date, average FROM averages ORDER BY average DESC LIMIT 5")
+			averages = db.session.execute("SELECT game_id, average_date, average FROM averages")
+			top_averages = db.session.execute("SELECT game_id, average_date, average FROM averages ORDER BY average DESC LIMIT 5")
 			return render_template("mainpage.html", avgs=averages, topavgs=top_averages)
 	if request.method == "POST":
 		average = request.form["addaverage"]
 		username = session["username"]
 		user = db.session.execute("SELECT id FROM users WHERE username=:username", {"username": username})
 		user_id = user.fetchone()[0]
-		sql = "INSERT INTO averages (average_date, user_id, average) VALUES (current_date, :user_id, :average)"
-		db.session.execute(sql, {"user_id": user_id, "average": average})
+		sql_game = "INSERT INTO games (game_date, player_one) VALUES (current_date, :player_one)"
+		db.session.execute(sql_game, {"player_one": user_id})
+		game = db.session.execute("SELECT id FROM games ORDER BY id DESC")
+		game_id = game.fetchone()[0]
+		sql = "INSERT INTO averages (game_id, average_date, user_id, average) VALUES (:game_id, current_date, :user_id, :average)"
+		db.session.execute(sql, {"game_id": game_id, "user_id": user_id, "average": average})
 		db.session.commit()
 		return redirect("/")
 
-@app.route("/game", methods = ["GET"])
-def game():
-	return render_template("game.html")
+@app.route("/game/<int:id>", methods = ["GET"])
+def game(id):
+	avg_sql = db.session.execute("SELECT * FROM averages WHERE game_id=:id", {"id": id})
+	game_sql = db.session.execute("SELECT * FROM games WHERE id=:id", {"id": id})
+	avg = avg_sql.fetchone()
+	player = db.session.execute("SELECT username FROM users WHERE id=:user_id", {"user_id": avg.user_id})
+	player_one = player.fetchone()
+	game = game_sql.fetchone()
+	return render_template("game.html", game=game, avg=avg, player1=player_one)
 
 @app.route("/newgame", methods = ["GET", "POST"])
 def newgame():

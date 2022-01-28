@@ -26,7 +26,7 @@ def register():
 		hash_value = generate_password_hash(password)
 		db.session.execute(sql, {"username": username, "password": hash_value})
 		db.session.commit()
-		return redirect("/")
+		return redirect("/login")
 
 @app.route("/login", methods = ["POST", "GET"])
 def login():
@@ -46,7 +46,7 @@ def login():
 			hash_value = user.password
 			if check_password_hash(hash_value, password):
 				return redirect("/")
-		return redirect("/login")
+		return render_template("login.html", error="Incorrect username or password")
 
 @app.route("/logout")
 def logout():
@@ -60,13 +60,15 @@ def mainpage():
 			username = session["username"]
 			user = db.session.execute("SELECT id FROM users WHERE username=:username", {"username": username})
 			user_id = user.fetchone()[0]
-			averages = db.session.execute("SELECT average_date, average FROM averages WHERE user_id=:user_id", {"user_id": user_id})
-			total_avg = db.session.execute("SELECT AVG(average)::numeric(3,1) FROM averages WHERE user_id=:user_id", {"user_id": user_id})
+			averages = db.session.execute("SELECT average_date, average FROM averages WHERE user_id=:user_id ORDER BY id DESC", {"user_id": user_id})
+			topavgs = db.session.execute("SELECT average_date, average FROM averages WHERE user_id=:user_id ORDER BY average DESC LIMIT 5", {"user_id": user_id})
+			total_avg = db.session.execute("SELECT AVG(average)::numeric(3,1) FROM averages WHERE user_id=:user_id AND average_date > NOW() - INTERVAL '30 days'", {"user_id": user_id})
 			total = total_avg.fetchone()[0]
-			return render_template("mainpage.html", avgs=averages, total=total)
+			return render_template("mainpage.html", avgs=averages, total=total, topavgs=topavgs)
 		else:
 			averages = db.session.execute("SELECT average_date, average FROM averages")
-			return render_template("mainpage.html", avgs=averages)
+			top_averages = db.session.execute("SELECT average_date, average FROM averages ORDER BY average DESC LIMIT 5")
+			return render_template("mainpage.html", avgs=averages, topavgs=top_averages)
 	if request.method == "POST":
 		average = request.form["addaverage"]
 		username = session["username"]

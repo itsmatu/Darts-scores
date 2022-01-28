@@ -5,15 +5,23 @@ Add an average: <input type="number" step="0.1" min=0 max=180 name="addaverage">
 <br>
 <input type="submit" value="Submit">
 </form>
-<h1>Your total average: {{ total }}</h1>
+<h1>Your total average past 30 days: <u>{{ total }}</u></h1>
+<h2>Your top 5 averages: </h2>
+{%for avg in topavgs %}
+<p>{{ avg.average_date }} {{ avg.average }} <a href="/game">view</a></p>
+{% endfor %}
 <h2>Your averages:</h2>
 {% for avg in avgs %}
-<p>{{ avg.average_date }} {{ avg.average }} <a href="/game/{game_id}">view</a></p>
+<p>{{ avg.average_date }} {{ avg.average }} <a href="/game">view</a></p>
 {% endfor %}
 {% else %}
 <a href="/login">Log in</a>
+<h1>Top 5 averages:</h1>
+{% for avg in topavgs %}
+<p> {{ avg.average_date }} {{ avg.average }} <a href="/game">view</a></p>
+{% endfor %}
 <h2>All averages:</h2>
 {% for avg in avgs %}
-<p>{{ avg.average_date }} {{ avg.average }} <a href="/game/{game_id}">view</a></p>
+<p>{{ avg.average_date }} {{ avg.average }} <a href="/game">view</a></p>
 {% endfor %}
 {% endif %}

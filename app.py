@@ -66,9 +66,7 @@ def mainpage():
 			total = total_avg.fetchone()[0]
 			return render_template("mainpage.html", avgs=averages, total=total, topavgs=topavgs)
 		else:
-			averages = db.session.execute("SELECT game_id, average_date, average FROM averages")
-			top_averages = db.session.execute("SELECT game_id, average_date, average FROM averages ORDER BY average DESC LIMIT 5")
-			return render_template("mainpage.html", avgs=averages, topavgs=top_averages)
+			return redirect("/mainpage/allstats")
 	if request.method == "POST":
 		average = request.form["addaverage"]
 		username = session["username"]
@@ -104,3 +102,9 @@ def newgame():
 			user = db.session.execute("SELECT id FROM users WHERE username=:username", {"username": username})
 			score = request.form["score"]
 			return render_template("newgame.html", score=score)
+
+@app.route("/mainpage/allstats", methods = ["GET"])
+def allstats():
+		averages = db.session.execute("SELECT averages.game_id, averages.average_date, averages.average, users.username FROM averages JOIN users ON averages.user_id = users.id")
+		top_averages = db.session.execute("SELECT averages.game_id, averages.average_date, averages.average, users.username FROM averages JOIN users ON averages.user_id = users.id  ORDER BY averages.average DESC LIMIT 5")
+		return render_template("mainpage.html", avgs=averages, topavgs=top_averages)

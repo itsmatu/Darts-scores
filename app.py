@@ -105,6 +105,6 @@ def newgame():
 
 @app.route("/mainpage/allstats", methods = ["GET"])
 def allstats():
-		averages = db.session.execute("SELECT averages.game_id, averages.average_date, averages.average, users.username FROM averages JOIN users ON averages.user_id = users.id")
+		averages = db.session.execute("SELECT averages.game_id, averages.average_date, averages.average, users.username FROM averages JOIN users ON averages.user_id = users.id ORDER BY averages.id DESC")
 		top_averages = db.session.execute("SELECT averages.game_id, averages.average_date, averages.average, users.username FROM averages JOIN users ON averages.user_id = users.id  ORDER BY averages.average DESC LIMIT 5")
 		return render_template("mainpage.html", avgs=averages, topavgs=top_averages)

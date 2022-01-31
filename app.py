@@ -100,8 +100,7 @@ def newgame():
 		if session.get("username"):
 			username = session["username"]
 			user = db.session.execute("SELECT id FROM users WHERE username=:username", {"username": username})
-			score = request.form["score"]
-			return render_template("newgame.html", score=score)
+			return redirect("/newgame")
 
 @app.route("/mainpage/allstats", methods = ["GET"])
 def allstats():

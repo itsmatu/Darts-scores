@@ -1,8 +1,11 @@
 <h1>New game</h1>
 <br>
 <br>
-<form action="/newgame"" method="POST">
-Score: <input type="number" name="score" step="0" min=0 max=180>
-<input type="submit" value="Add">
-</form>
-<p>{{ score }}</p>
+Score: <input type="number" id="newScore" step="0" min=0 max=180>
+<br>
+<button onClick="addScore()">Add score</button>
+<br>
+Player 1: <span id="currentScore1">501</span> <br>
+Player 2: <span id="currentScore2">501</span>
+<script src={{ url_for('static', filename='script.js') }}></script>
+

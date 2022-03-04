@@ -1,9 +1,12 @@
 <title>Darts scores</title>
 <h1>Register a new account</h1>
+<p><b>{{ error }}</b></p>
 <form action="/register" method="POST">
 <p>Username:<br>
 <input type="text" name="username" required></p>
 <p>Password:<br>
-<input type="password" name="password" required></p>
+<input type="password" name="password1" required></p>
+<p>Re-enter your password:<br>
+<input type="password" name="password2" required></p>
 <input type="submit" value="Register">
 </form>

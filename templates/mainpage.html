@@ -3,11 +3,11 @@
 {% block content %}
 {% if session.username and "allstats" not in request.path %}
 <form action="/mainpage" method="POST">
-Add an average: <input style="font-family: sans-serif;" type="number" step="0.1" min=0 max=180 name="addaverage">
+Add an average: <input style="font-family: sans-serif;" type="number" step="0.1" min=0 max=180 name="addaverage" required>
 <br>
-Highest score: <input style="font-family: sans-serif;" type="number" step="1" min=0 name="addhighest">
+Highest score: <input style="font-family: sans-serif;" type="number" step="1" min=0 name="addhighest" required>
 <br>
-Ton+ count: <input style="font-family: sans-serif;" type="number" step="1" min=0 name="addtons">
+Ton+ count: <input style="font-family: sans-serif;" type="number" step="1" min=0 name="addtons" required>
 <br>
 <input class="btn btn-success" type="submit" value="Submit">
 </form>

@@ -26,6 +26,8 @@ def register():
             return render_template("register.html", error="Passwords doesn't match")
         if users.register(username, password1):
             return redirect("/")
+        else:
+            return render_template("register.html", error="User already exists")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

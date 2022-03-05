@@ -1,8 +1,19 @@
 a {
-    color: black;
+    color: rgb(27, 27, 27);
     text-decoration: none;
 }
 
 a:hover {
     color: darkred;
 }
+
+.cont {
+    text-align: center;
+}
+
+body {
+    background-color: rgb(236, 236, 236);
+    font-family: 'Urbanist', sans-serif;
+}
+
+

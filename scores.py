@@ -20,6 +20,8 @@ def get_all_scores():
 
 def add_score():
     average = request.form["addaverage"]
+    tons = request.form["addtons"]
+    highest = request.form["addhighest"]
     username = session["username"]
     user = db.session.execute("SELECT id FROM users WHERE username=:username", {"username": username})
     user_id = user.fetchone()[0]
@@ -27,6 +29,6 @@ def add_score():
     db.session.execute(sql_game, {"player_one": user_id})
     game = db.session.execute("SELECT id FROM games ORDER BY id DESC")
     game_id = game.fetchone()[0]
-    sql = "INSERT INTO averages (game_id, average_date, user_id, average) VALUES (:game_id, current_date, :user_id, :average)"
-    db.session.execute(sql, {"game_id": game_id, "user_id": user_id, "average": average})
+    sql = "INSERT INTO averages (game_id, average_date, user_id, average, tons, highest_score) VALUES (:game_id, current_date, :user_id, :average, :tons, :highest_score)"
+    db.session.execute(sql, {"game_id": game_id, "user_id": user_id, "average": average, "tons": tons, "highest_score": highest})
     db.session.commit()

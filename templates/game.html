@@ -3,7 +3,10 @@
 {% block title %}Main page{% endblock %}
 {% block content %}
 <title>Darts scores</title>
-<h1>Game</h1>
-
-<p>{{ player1.username }} {{ avg.average }}</p>
+<h1>Match #{{ avg.game_id }} - {{ avg.average_date }}</h1>
+<br>
+<h2>Player: {{ player1.username }}</h2>
+<h3>Average: {{ avg.average }}</h3>
+<h3>Highest score: {{ avg.highest_score }}</h3>
+<h3>Tons: {{ avg.tons }}</h3>
 {% endblock %}

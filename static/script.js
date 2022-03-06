@@ -11,3 +11,11 @@ const addScore = () => {
 		turn = 1;
 	}
 }
+
+const showScore = () => {
+	console.log("asda");
+	const s = document.getElementById("c");
+	const bb = document.getElementById("bb");
+	bb.style.display = "none";
+	s.style.display = "block";
+}

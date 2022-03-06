@@ -34,10 +34,10 @@ def add_score():
     db.session.commit()
 
 def check_valid_score():
-    if request.form["addaverage"] > 180:
+    if float(request.form["addaverage"]) > 180:
         return False
-    if request.form["addtons"] > 5:
+    if int(request.form["addtons"]) > 5:
         return False
-    if request.form["addhighest"] > 180:
+    if int(request.form["addhighest"]) > 180:
         return False
     return True

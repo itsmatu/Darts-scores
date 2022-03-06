@@ -2,6 +2,7 @@
 {% block title %}Main page{% endblock %}
 {% block content %}
 {% if session.username and "allstats" not in request.path %}
+<p>{{ error }}</p>
 <button style="margin-left: 25px;" class="btn btn-info" onclick="showScore()" id="bb">Add scores</button>
 <div id="c">
 <div class="container">
@@ -10,7 +11,7 @@ Average: <input class="input-group mb-3" style="font-family: sans-serif;" type="
 <br>
 Highest score: <input class="input-group mb-3" style="font-family: sans-serif;" type="number" step="1" min=1 max=180 name="addhighest" required>
 <br>
-<div><span title="100+ scores with 3 darts" style="color: blue; cursor: default;">(?)</span> Ton+ count: <input class="input-group mb-3" style="font-family: sans-serif;" type="number" step="1" min=0 name="addtons" required></div>
+<div><span title="100+ scores with 3 darts" style="color: blue; cursor: default;">(?)</span> Ton+ count: <input class="input-group mb-3" style="font-family: sans-serif;" type="number" step="1" min=0 max=5 name="addtons" required></div>
 <br>
 <input class="btn btn-info" type="submit" value="Submit">
 </form>
@@ -34,8 +35,8 @@ Highest score: <input class="input-group mb-3" style="font-family: sans-serif;" 
 {% endfor %}
 </section>
 {% else %}
-{% if session.username and "allstats" in request.path %}
 <section style="margin-left: 25px;">
+{% if session.username and "allstats" in request.path %}
 <h1>Stats from all users</h1>
 {% else %}
 {% endif %}

@@ -32,3 +32,12 @@ def add_score():
     sql = "INSERT INTO averages (game_id, average_date, user_id, average, tons, highest_score) VALUES (:game_id, current_date, :user_id, :average, :tons, :highest_score)"
     db.session.execute(sql, {"game_id": game_id, "user_id": user_id, "average": average, "tons": tons, "highest_score": highest})
     db.session.commit()
+
+def check_valid_score():
+    if request.form["addaverage"] > 180:
+        return False
+    if request.form["addtons"] > 5:
+        return False
+    if request.form["addhighest"] > 180:
+        return False
+    return True

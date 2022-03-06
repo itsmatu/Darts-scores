@@ -52,14 +52,17 @@ def logout():
 
 @app.route("/mainpage", methods = ["POST", "GET"])
 def mainpage():
-	if request.method == "GET":
-		if session.get("username"):
-			return scores.get_user_scores()
-		else:
-			return redirect("/mainpage/allstats")
-	if request.method == "POST":
-		scores.add_score()
-		return redirect("/")
+    if request.method == "GET":
+        if session.get("username"):
+            return scores.get_user_scores()
+        else:
+            return redirect("/mainpage/allstats")
+        if request.method == "POST":
+            if check_valid_score:
+                scores.add_score()
+                return redirect("/")
+        else:
+            return render_template("/mainpage", error="Invalid value(s) while adding score. Please try again.")
 
 @app.route("/game/<int:id>", methods = ["GET"])
 def match(id):

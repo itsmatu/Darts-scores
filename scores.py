@@ -9,7 +9,7 @@ def get_user_scores():
     user_id = user.fetchone()[0]
     averages = db.session.execute("SELECT game_id, average_date, average FROM averages WHERE user_id=:user_id ORDER BY id DESC", {"user_id": user_id})		
     topavgs = db.session.execute("SELECT game_id, average_date, average FROM averages WHERE user_id=:user_id ORDER BY average DESC LIMIT 5", {"user_id": user_id})
-    total_avg = db.session.execute("SELECT AVG(average)::numeric(3,1) FROM averages WHERE user_id=:user_id AND average_date > NOW() - INTERVAL '30 days'", {"user_id": user_id})
+    total_avg = db.session.execute("SELECT AVG(average)::numeric(4,1) FROM averages WHERE user_id=:user_id AND average_date > NOW() - INTERVAL '30 days'", {"user_id": user_id})
     total = total_avg.fetchone()[0]
     return render_template("mainpage.html", avgs=averages, total=total, topavgs=topavgs)
 

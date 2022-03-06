@@ -38,7 +38,7 @@ def add_score():
 def check_valid_score():
     if float(request.form["addaverage"]) > 180:
         return False
-    if int(request.form["addtons"]) > 5:
+    if int(request.form["addtons"]) > 5 or (int(request.form["addtons"]) > 0 and int(request.form["addhighest"]) < 100):
         return False
     if int(request.form["addhighest"]) > 180:
         return False

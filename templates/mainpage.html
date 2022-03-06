@@ -2,10 +2,9 @@
 {% block title %}Main page{% endblock %}
 {% block content %}
 {% if session.username and "allstats" not in request.path %}
-<p>{{ error }}</p>
 <button style="margin-left: 25px;" class="btn btn-info" onclick="showScore()" id="bb">Add scores</button>
 <div id="c">
-<div class="container">
+<div class="container" style="margin-left: 25px;" >
 <form action="/mainpage" method="POST">
 Average: <input class="input-group mb-3" style="font-family: sans-serif;" type="number" step="0.1" min=0 max=180 name="addaverage" required>
 <br>

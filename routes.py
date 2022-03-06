@@ -62,7 +62,7 @@ def mainpage():
             scores.add_score()
             return redirect("/")
         else:
-            return render_template("mainpage.html", error="Invalid value(s) while adding score. Please try again.")
+            return scores.get_user_scores()
 
 @app.route("/game/<int:id>", methods = ["GET"])
 def match(id):

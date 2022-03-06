@@ -14,6 +14,7 @@ Highest score: <input class="input-group mb-3" style="font-family: sans-serif;" 
 <div><span title="100+ scores with 3 darts" style="color: blue; cursor: default;">(?)</span> Ton+ count: <input class="input-group mb-3" style="font-family: sans-serif;" type="number" step="1" min=0 max=5 name="addtons" required></div>
 <br>
 <input class="btn btn-info" type="submit" value="Submit">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 </div>
 </div>

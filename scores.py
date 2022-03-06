@@ -19,6 +19,8 @@ def get_all_scores():
     return render_template("mainpage.html", avgs=averages, topavgs=top_averages)
 
 def add_score():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     average = request.form["addaverage"]
     tons = request.form["addtons"]
     highest = request.form["addhighest"]
